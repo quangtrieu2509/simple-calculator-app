@@ -1,4 +1,4 @@
-package com.trieudq194388.simple_caculator_app;
+package com.trieudq194388.simple_calculator_app;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,8 +7,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-
-import java.math.BigInteger;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -193,7 +191,7 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
     public void oppBtnOnClick(View view) {
         String input = inputText.getText().toString();
-        int inputInt = Integer.parseInt(input);
+        long inputInt = Long.parseLong(input);
         if(previousBtn.equals(EQUAL_BUTTON)){
             operationText.setText(R.string.default_operation);
             inputInt *= -1;

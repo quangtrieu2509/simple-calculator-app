@@ -1,4 +1,4 @@
-package com.trieudq194388.simple_caculator_app;
+package com.trieudq194388.simple_calculator_app;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.trieudq194388.simple_caculator_app", appContext.getPackageName());
+        assertEquals("com.trieudq194388.simple_calculator_app", appContext.getPackageName());
     }
 }

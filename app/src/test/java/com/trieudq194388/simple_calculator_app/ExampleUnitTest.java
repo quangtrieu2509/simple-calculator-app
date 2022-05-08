@@ -1,4 +1,4 @@
-package com.trieudq194388.simple_caculator_app;
+package com.trieudq194388.simple_calculator_app;
 
 import org.junit.Test;
 
