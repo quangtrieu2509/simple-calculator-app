@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">simple-calculator-app</string>
+    <string name="default_string">0</string>
+    <string name="default_operation"> </string>
+    <string name="opp_str">+/-</string>
+    <string name="_0_str">0</string>
+    <string name="dot_str">.</string>
+    <string name="equal_str">=</string>
+    <string name="_1_str">1</string>
+    <string name="_2_str">2</string>
+    <string name="_3_str">3</string>
+    <string name="add_str">+</string>
+    <string name="_4_str">4</string>
+    <string name="_5_str">5</string>
+    <string name="_6_str">6</string>
+    <string name="minus_str">-</string>
+    <string name="_7_str">7</string>
+    <string name="_8_str">8</string>
+    <string name="_9_str">9</string>
+    <string name="mul_str">x</string>
+    <string name="ce_str">CE</string>
+    <string name="c_str">C</string>
+    <string name="bs_str">BS</string>
+    <string name="div_str">/</string>
+</resources>
