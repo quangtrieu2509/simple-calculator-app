@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void ceBtnOnClick(View view) {
-
+        DBZandOORCheck();
         if(previousBtn.equals(EQUAL_BUTTON)){
             inputText.setText(R.string.default_string);
             operationText.setText(R.string.default_operation);
@@ -41,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void cBtnOnClick(View view) {
+        previousBtn = NUMBER;
+        enableOperatorBtn();
         inputText.setText(R.string.default_string);
         operationText.setText(R.string.default_operation);
     }
