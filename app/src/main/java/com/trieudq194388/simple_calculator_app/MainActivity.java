@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String OPERATOR = "operator";
     private static final String BACKSPACE = "backspace";
     private static final String CANNOT_DIVIDE_BY_ZERO = "cannot divide by zero";
+    private static final String OUT_OF_RANGE = "Out of range";
     private TextView inputText, operationText;
     private String previousBtn;
 
@@ -29,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void ceBtnOnClick(View view) {
-        dividedByZeroCheck();
 
         if(previousBtn.equals(EQUAL_BUTTON)){
             inputText.setText(R.string.default_string);
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void bsBtnOnClick(View view) {
-        dividedByZeroCheck();
+        DBZandOORCheck();
 
         if(!previousBtn.equals(OPERATOR)){
             if(previousBtn.equals(EQUAL_BUTTON))
@@ -58,8 +58,8 @@ public class MainActivity extends AppCompatActivity {
     }
     private void bsBtnAction(){
         String input = inputText.getText().toString();
-        long inputInt = Long.parseLong(input);
-        if(Math.abs(inputInt) / 10 == 0) inputText.setText(R.string.default_string);
+        int size = input.length();
+        if((size == 1) || (size == 2 && input.contains("-"))) inputText.setText(R.string.default_string);
         else {
             input = input.substring(0, input.length() - 1);
             inputText.setText(input);
@@ -109,9 +109,9 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     public void equalBtnOnClick(View view) {
-        dividedByZeroCheck();
+        DBZandOORCheck();
 
-        if(!previousBtn.equals(EQUAL_BUTTON)){
+        if(previousBtn != null && !previousBtn.equals(EQUAL_BUTTON)){
             String currOperation = operationText.getText().toString();
             currOperation += inputText.getText().toString();
             calculate(currOperation);
@@ -132,6 +132,8 @@ public class MainActivity extends AppCompatActivity {
                 inputText.setText(add+"");
             }catch (Exception e){
                 Log.e("ERROR", e+"");
+                inputText.setText(OUT_OF_RANGE);
+                disableOperatorBtn();
             }
         }
         else if(currOperation.split(" - ").length == 2){
@@ -141,6 +143,8 @@ public class MainActivity extends AppCompatActivity {
                 inputText.setText(minus+"");
             }catch (Exception e){
                 Log.e("ERROR", e+"");
+                inputText.setText(OUT_OF_RANGE);
+                disableOperatorBtn();
             }
         }
         else if(currOperation.split(" x ").length == 2){
@@ -150,6 +154,8 @@ public class MainActivity extends AppCompatActivity {
                 inputText.setText(mul+"");
             }catch (Exception e){
                 Log.e("ERROR", e+"");
+                inputText.setText(OUT_OF_RANGE);
+                disableOperatorBtn();
             }
         }
         else if(currOperation.split(" / ").length == 2){
@@ -166,6 +172,8 @@ public class MainActivity extends AppCompatActivity {
 
             }catch (Exception e){
                 Log.e("ERROR", e+"");
+                inputText.setText(OUT_OF_RANGE);
+                disableOperatorBtn();
             }
         }
     }
@@ -191,18 +199,25 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
     public void oppBtnOnClick(View view) {
         String input = inputText.getText().toString();
-        long inputInt = Long.parseLong(input);
-        if(previousBtn.equals(EQUAL_BUTTON)){
-            operationText.setText(R.string.default_operation);
-            inputInt *= -1;
-            inputText.setText(inputInt + "");
+        try{
+            long inputInt = Long.parseLong(input);
+            if(previousBtn.equals(EQUAL_BUTTON)){
+                operationText.setText(R.string.default_operation);
+                inputInt *= -1;
+                inputText.setText(inputInt + "");
+            }
+            else if(previousBtn.equals(OPERATOR))
+                inputText.setText(R.string.default_string);
+            else{
+                inputInt *= -1;
+                inputText.setText(inputInt + "");
+            }
+        }catch(Exception e){
+            Log.e("ERROR", e+"");
+            inputText.setText("Out of range");
+            disableOperatorBtn();
         }
-        else if(previousBtn.equals(OPERATOR))
-            inputText.setText(R.string.default_string);
-        else{
-            inputInt *= -1;
-            inputText.setText(inputInt + "");
-        }
+
     }
 
     @SuppressLint("SetTextI18n")
@@ -251,17 +266,19 @@ public class MainActivity extends AppCompatActivity {
         enableOperatorBtn();
 
         String input = inputText.getText().toString();
-        if(input.equals("0") || previousBtn.equals(OPERATOR))
-            inputText.setText(number+"");
-        else if(previousBtn.equals(EQUAL_BUTTON)){
+//        Log.i("num", input);
+
+        if(previousBtn != null && (previousBtn.equals(EQUAL_BUTTON) || input.equals(CANNOT_DIVIDE_BY_ZERO) || input.equals(OUT_OF_RANGE))){
             inputText.setText(number+"");
             operationText.setText(R.string.default_operation);
         }
+        else if(input.equals("0") || previousBtn.equals(OPERATOR))
+            inputText.setText(number+"");
         else inputText.setText(input + number);
         previousBtn = NUMBER;
     }
-    private void dividedByZeroCheck(){
-        if(inputText.getText().toString().equals(CANNOT_DIVIDE_BY_ZERO)){
+    private void DBZandOORCheck(){
+        if(inputText.getText().toString().equals(CANNOT_DIVIDE_BY_ZERO) || inputText.getText().toString().equals(OUT_OF_RANGE)){
             cBtnOnClick(findViewById(androidx.appcompat.R.id.content));
             enableOperatorBtn();
         }
